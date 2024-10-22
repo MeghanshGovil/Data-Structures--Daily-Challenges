@@ -1,0 +1,42 @@
+Question -> Make Sum Divisible by P
+
+Answer -> 
+
+  class Solution {
+  public:
+      int minSubarray(vector<int>& nums, int p) {
+          unordered_map<int,int>mpp;
+          int n = nums.size();
+          int target = 0;
+          int sum = 0;
+  
+          for (int i = 0; i < nums.size(); i++) {
+              int num = nums[i];
+              target = (num + target) % p;
+          }
+  
+          if(target == 0) {
+              return 0;
+          }
+  
+          mpp[0] = -1;
+          int ans = n;
+  
+          for (int i = 0; i < n; i++) {
+              sum = (sum + nums[i]) % p;
+              int key = (sum - target + p) % p;
+  
+              if (mpp.count(key)) {
+                  ans = min(ans, i - mpp[key]);
+              }
+  
+              mpp[sum % p] = i;
+          }
+  
+          if (ans < n) {
+              return ans;
+          } else {
+              return -1;
+          }
+      }
+  };
