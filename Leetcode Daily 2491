@@ -1,0 +1,23 @@
+Question -> Divide Players Into Teams of Equal Skill
+
+Answer->
+
+class Solution {
+public:
+    long long dividePlayers(vector<int>& skill) {
+        sort(skill.begin(), skill.end());
+        int total_sum = accumulate(skill.begin(), skill.end(), 0);
+        int target_sum = total_sum / (skill.size() / 2);
+        long long chemistry = 0;
+        int l = 0, r = skill.size() - 1;
+        while (l < r) {
+            if (skill[l] + skill[r] != target_sum) {
+                return -1;
+            }
+            chemistry += (long long)skill[l] * skill[r];
+            l++;
+            r--;
+        }
+        return chemistry;
+    }
+};
